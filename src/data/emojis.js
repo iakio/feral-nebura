@@ -72,11 +72,6 @@ export const emojis = [
   { emoji: "💡", name: "light bulb", category: "objects" }
 ];
 
-export const getRandomEmojis = (count = 4) => {
-  const shuffled = [...emojis].sort(() => 0.5 - Math.random());
-  return shuffled.slice(0, count);
-};
-
 export const getRandomOptions = (correctAnswer, count = 4) => {
   // まず同じカテゴリの絵文字を取得
   const sameCategory = emojis.filter(emoji => 

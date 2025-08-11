@@ -9,16 +9,28 @@ const GameScreen = ({ onGameEnd }) => {
   const [options, setOptions] = useState([]);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [showResult, setShowResult] = useState(false);
+  const [usedEmojis, setUsedEmojis] = useState([]);
 
   const totalQuestions = 10;
 
   useEffect(() => {
     generateQuestion();
-  }, [currentQuestion]);
+  }, [currentQuestion]); // generateQuestionは依存関係に含めない（意図的）
 
 
   const generateQuestion = () => {
-    const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+    // 出題済みでない絵文字を取得
+    const availableEmojis = emojis.filter(emoji => 
+      !usedEmojis.some(used => used.name === emoji.name)
+    );
+    
+    // 利用可能な絵文字がない場合（念のため）
+    if (availableEmojis.length === 0) {
+      console.warn('No more available emojis');
+      return;
+    }
+    
+    const randomEmoji = availableEmojis[Math.floor(Math.random() * availableEmojis.length)];
     const mode = Math.random() > 0.5 ? 'emojiToName' : 'nameToEmoji';
     
     setGameMode(mode);
@@ -26,6 +38,9 @@ const GameScreen = ({ onGameEnd }) => {
     setOptions(getRandomOptions(randomEmoji, 4));
     setSelectedAnswer(null);
     setShowResult(false);
+    
+    // 使用済みリストに追加
+    setUsedEmojis(prev => [...prev, randomEmoji]);
   };
 
   const handleAnswer = (answer) => {
