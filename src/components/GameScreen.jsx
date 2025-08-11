@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { emojis, getRandomOptions } from '../data/emojis';
 
 const GameScreen = ({ onGameEnd }) => {
@@ -9,7 +9,6 @@ const GameScreen = ({ onGameEnd }) => {
   const [options, setOptions] = useState([]);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [showResult, setShowResult] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(10);
 
   const totalQuestions = 10;
 
@@ -17,31 +16,6 @@ const GameScreen = ({ onGameEnd }) => {
     generateQuestion();
   }, [currentQuestion]);
 
-  const handleTimeUp = useCallback(() => {
-    setSelectedAnswer({ name: '', emoji: '' });
-    setShowResult(true);
-    
-    setTimeout(() => {
-      if (currentQuestion < totalQuestions) {
-        setCurrentQuestion(currentQuestion + 1);
-      } else {
-        // 修正: 最新のスコアを取得してゲーム終了
-        setScore(currentScore => {
-          onGameEnd(currentScore);
-          return currentScore;
-        });
-      }
-    }, 1500);
-  }, [currentQuestion, onGameEnd]);
-
-  useEffect(() => {
-    if (timeLeft > 0 && !showResult && !selectedAnswer) {
-      const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
-      return () => clearTimeout(timer);
-    } else if (timeLeft === 0 && !selectedAnswer) {
-      handleTimeUp();
-    }
-  }, [timeLeft, showResult, selectedAnswer, handleTimeUp]);
 
   const generateQuestion = () => {
     const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
@@ -52,7 +26,6 @@ const GameScreen = ({ onGameEnd }) => {
     setOptions(getRandomOptions(randomEmoji, 4));
     setSelectedAnswer(null);
     setShowResult(false);
-    setTimeLeft(10);
   };
 
   const handleAnswer = (answer) => {
@@ -77,25 +50,19 @@ const GameScreen = ({ onGameEnd }) => {
   if (!currentEmoji) return null;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-green-400 to-blue-600 p-6 text-white">
+    <div className="min-h-screen bg-white p-6 text-gray-800">
       {/* ヘッダー */}
       <div className="flex justify-between items-center mb-8">
-        <div className="bg-white/20 backdrop-blur-sm rounded-full px-4 py-2">
+        <div className="bg-gray-100 rounded-full px-4 py-2">
           <span className="text-sm font-semibold">
             {currentQuestion} / {totalQuestions}
           </span>
         </div>
-        <div className="bg-white/20 backdrop-blur-sm rounded-full px-4 py-2">
+        <div className="bg-gray-100 rounded-full px-4 py-2">
           <span className="text-sm font-semibold">スコア: {score}</span>
         </div>
       </div>
 
-      {/* タイマー */}
-      <div className="text-center mb-6">
-        <div className={`text-2xl font-bold ${timeLeft <= 3 ? 'text-red-300 animate-pulse' : ''}`}>
-          ⏰ {timeLeft}
-        </div>
-      </div>
 
       {/* 問題 */}
       <div className="text-center mb-8">
@@ -106,7 +73,7 @@ const GameScreen = ({ onGameEnd }) => {
           </div>
         ) : (
           <div>
-            <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-6 mb-4">
+            <div className="bg-gray-100 rounded-2xl p-6 mb-4">
               <p className="text-2xl font-bold">{currentEmoji.name}</p>
             </div>
             <p className="text-xl font-semibold">この名前の絵文字は？</p>
@@ -130,11 +97,11 @@ const GameScreen = ({ onGameEnd }) => {
               // 選択した不正解は赤色
               buttonClass += "bg-red-500 text-white shadow-lg";
             } else {
-              // その他は半透明
-              buttonClass += "bg-white/30 text-white/60";
+              // その他は薄いグレー
+              buttonClass += "bg-gray-200 text-gray-500";
             }
           } else {
-            buttonClass += "bg-white text-gray-800";
+            buttonClass += "bg-gray-100 border border-gray-300 text-gray-800 hover:bg-gray-200";
           }
 
           return (
@@ -159,8 +126,6 @@ const GameScreen = ({ onGameEnd }) => {
         <div className="text-center mt-6">
           {selectedAnswer && selectedAnswer.name === currentEmoji.name ? (
             <div className="text-2xl">🎉 正解！</div>
-          ) : timeLeft === 0 ? (
-            <div className="text-2xl">⏰ 時間切れ！</div>
           ) : (
             <div className="text-2xl">❌ 不正解</div>
           )}

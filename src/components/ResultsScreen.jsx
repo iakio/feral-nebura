@@ -13,7 +13,7 @@ const ResultsScreen = ({ score, onRestart, onBackToTitle }) => {
   const { message, emoji } = getScoreMessage();
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-purple-500 to-pink-600 flex flex-col items-center justify-center p-6 text-white">
+    <div className="min-h-screen bg-white flex flex-col items-center justify-center p-6 text-gray-800">
       <div className="text-center mb-8">
         <div className="text-8xl mb-4">{emoji}</div>
         <h1 className="text-3xl font-bold mb-2">ゲーム終了！</h1>
@@ -21,16 +21,16 @@ const ResultsScreen = ({ score, onRestart, onBackToTitle }) => {
       </div>
       
       {/* スコア表示 */}
-      <div className="bg-white/20 backdrop-blur-sm rounded-3xl p-8 mb-8 text-center max-w-sm w-full">
+      <div className="bg-gray-100 rounded-3xl p-8 mb-8 text-center max-w-sm w-full">
         <div className="mb-6">
           <div className="text-6xl font-bold mb-2">{score}</div>
           <div className="text-xl opacity-90">/ {totalQuestions} 問</div>
         </div>
         
         <div className="mb-4">
-          <div className="bg-white/20 rounded-full h-4 overflow-hidden">
+          <div className="bg-gray-300 rounded-full h-4 overflow-hidden">
             <div 
-              className="bg-white h-full rounded-full transition-all duration-1000 ease-out"
+              className="bg-blue-500 h-full rounded-full transition-all duration-1000 ease-out"
               style={{ width: `${percentage}%` }}
             />
           </div>
@@ -56,14 +56,14 @@ const ResultsScreen = ({ score, onRestart, onBackToTitle }) => {
       <div className="space-y-4 w-full max-w-sm">
         <button
           onClick={onRestart}
-          className="w-full bg-white text-purple-600 px-8 py-4 rounded-full text-xl font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 min-h-[60px]"
+          className="w-full bg-blue-500 text-white px-8 py-4 rounded-full text-xl font-bold shadow-lg hover:shadow-xl hover:bg-blue-600 transition-all duration-200 min-h-[60px]"
         >
           もう一度プレイ
         </button>
         
         <button
           onClick={onBackToTitle}
-          className="w-full bg-white/20 backdrop-blur-sm text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-white/30 transition-all duration-200 min-h-[60px]"
+          className="w-full bg-gray-100 border border-gray-300 text-gray-800 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-200 transition-all duration-200 min-h-[60px]"
         >
           タイトルに戻る
         </button>
