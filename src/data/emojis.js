@@ -1,75 +1,75 @@
 export const emojis = [
   // 顔・表情
-  { emoji: "😀", name: "満面の笑み", category: "faces" },
-  { emoji: "😂", name: "大笑い", category: "faces" },
-  { emoji: "😊", name: "笑顔", category: "faces" },
-  { emoji: "😍", name: "ハートの目", category: "faces" },
-  { emoji: "🤔", name: "考えている顔", category: "faces" },
-  { emoji: "😭", name: "号泣", category: "faces" },
-  { emoji: "😎", name: "サングラス", category: "faces" },
-  { emoji: "😴", name: "眠い顔", category: "faces" },
-  { emoji: "🤗", name: "ハグ", category: "faces" },
-  { emoji: "😱", name: "驚愕", category: "faces" },
+  { emoji: "😀", name: "grinning face", category: "faces" },
+  { emoji: "😂", name: "face with tears of joy", category: "faces" },
+  { emoji: "😊", name: "smiling face with smiling eyes", category: "faces" },
+  { emoji: "😍", name: "smiling face with heart-eyes", category: "faces" },
+  { emoji: "🤔", name: "thinking face", category: "faces" },
+  { emoji: "😭", name: "loudly crying face", category: "faces" },
+  { emoji: "😎", name: "smiling face with sunglasses", category: "faces" },
+  { emoji: "😴", name: "sleeping face", category: "faces" },
+  { emoji: "🤗", name: "smiling face with open hands", category: "faces" },
+  { emoji: "😱", name: "face screaming in fear", category: "faces" },
 
   // 動物
-  { emoji: "🐶", name: "犬の顔", category: "animals" },
-  { emoji: "🐱", name: "猫の顔", category: "animals" },
-  { emoji: "🐰", name: "うさぎの顔", category: "animals" },
-  { emoji: "🐻", name: "熊の顔", category: "animals" },
-  { emoji: "🐼", name: "パンダの顔", category: "animals" },
-  { emoji: "🦁", name: "ライオンの顔", category: "animals" },
-  { emoji: "🐸", name: "カエルの顔", category: "animals" },
-  { emoji: "🐵", name: "サルの顔", category: "animals" },
-  { emoji: "🐮", name: "牛の顔", category: "animals" },
-  { emoji: "🐷", name: "豚の顔", category: "animals" },
+  { emoji: "🐶", name: "dog face", category: "animals" },
+  { emoji: "🐱", name: "cat face", category: "animals" },
+  { emoji: "🐰", name: "rabbit face", category: "animals" },
+  { emoji: "🐻", name: "bear", category: "animals" },
+  { emoji: "🐼", name: "panda", category: "animals" },
+  { emoji: "🦁", name: "lion", category: "animals" },
+  { emoji: "🐸", name: "frog", category: "animals" },
+  { emoji: "🐵", name: "monkey face", category: "animals" },
+  { emoji: "🐮", name: "cow face", category: "animals" },
+  { emoji: "🐷", name: "pig face", category: "animals" },
 
   // 食べ物
-  { emoji: "🍎", name: "赤いりんご", category: "food" },
-  { emoji: "🍌", name: "バナナ", category: "food" },
-  { emoji: "🍕", name: "ピザ", category: "food" },
-  { emoji: "🍔", name: "ハンバーガー", category: "food" },
-  { emoji: "🍣", name: "寿司", category: "food" },
-  { emoji: "🍰", name: "ケーキ", category: "food" },
-  { emoji: "🍦", name: "ソフトクリーム", category: "food" },
-  { emoji: "🍪", name: "クッキー", category: "food" },
-  { emoji: "🍫", name: "チョコレート", category: "food" },
-  { emoji: "☕", name: "コーヒー", category: "food" },
+  { emoji: "🍎", name: "red apple", category: "food" },
+  { emoji: "🍌", name: "banana", category: "food" },
+  { emoji: "🍕", name: "pizza", category: "food" },
+  { emoji: "🍔", name: "hamburger", category: "food" },
+  { emoji: "🍣", name: "sushi", category: "food" },
+  { emoji: "🍰", name: "shortcake", category: "food" },
+  { emoji: "🍦", name: "soft ice cream", category: "food" },
+  { emoji: "🍪", name: "cookie", category: "food" },
+  { emoji: "🍫", name: "chocolate bar", category: "food" },
+  { emoji: "☕", name: "hot beverage", category: "food" },
 
   // 自然・天気
-  { emoji: "☀️", name: "太陽", category: "nature" },
-  { emoji: "🌙", name: "三日月", category: "nature" },
-  { emoji: "⭐", name: "星", category: "nature" },
-  { emoji: "🌈", name: "虹", category: "nature" },
-  { emoji: "⚡", name: "雷", category: "nature" },
-  { emoji: "❄️", name: "雪の結晶", category: "nature" },
-  { emoji: "🌸", name: "桜", category: "nature" },
-  { emoji: "🌳", name: "木", category: "nature" },
-  { emoji: "🌊", name: "波", category: "nature" },
-  { emoji: "🔥", name: "火", category: "nature" },
+  { emoji: "☀️", name: "sun", category: "nature" },
+  { emoji: "🌙", name: "crescent moon", category: "nature" },
+  { emoji: "⭐", name: "star", category: "nature" },
+  { emoji: "🌈", name: "rainbow", category: "nature" },
+  { emoji: "⚡", name: "high voltage", category: "nature" },
+  { emoji: "❄️", name: "snowflake", category: "nature" },
+  { emoji: "🌸", name: "cherry blossom", category: "nature" },
+  { emoji: "🌳", name: "deciduous tree", category: "nature" },
+  { emoji: "🌊", name: "water wave", category: "nature" },
+  { emoji: "🔥", name: "fire", category: "nature" },
 
   // 乗り物
-  { emoji: "🚗", name: "自動車", category: "vehicles" },
-  { emoji: "🚌", name: "バス", category: "vehicles" },
-  { emoji: "🚇", name: "地下鉄", category: "vehicles" },
-  { emoji: "✈️", name: "飛行機", category: "vehicles" },
-  { emoji: "🚢", name: "船", category: "vehicles" },
-  { emoji: "🚴", name: "自転車に乗る人", category: "vehicles" },
-  { emoji: "🚀", name: "ロケット", category: "vehicles" },
-  { emoji: "🚁", name: "ヘリコプター", category: "vehicles" },
-  { emoji: "🛵", name: "スクーター", category: "vehicles" },
-  { emoji: "🚂", name: "機関車", category: "vehicles" },
+  { emoji: "🚗", name: "automobile", category: "vehicles" },
+  { emoji: "🚌", name: "bus", category: "vehicles" },
+  { emoji: "🚇", name: "metro", category: "vehicles" },
+  { emoji: "✈️", name: "airplane", category: "vehicles" },
+  { emoji: "🚢", name: "ship", category: "vehicles" },
+  { emoji: "🚴", name: "person biking", category: "vehicles" },
+  { emoji: "🚀", name: "rocket", category: "vehicles" },
+  { emoji: "🚁", name: "helicopter", category: "vehicles" },
+  { emoji: "🛵", name: "motor scooter", category: "vehicles" },
+  { emoji: "🚂", name: "locomotive", category: "vehicles" },
 
   // オブジェクト
-  { emoji: "📱", name: "スマートフォン", category: "objects" },
-  { emoji: "💻", name: "ノートパソコン", category: "objects" },
-  { emoji: "⌚", name: "腕時計", category: "objects" },
-  { emoji: "📚", name: "本", category: "objects" },
-  { emoji: "✏️", name: "鉛筆", category: "objects" },
-  { emoji: "🎵", name: "音符", category: "objects" },
-  { emoji: "⚽", name: "サッカーボール", category: "objects" },
-  { emoji: "🎂", name: "誕生日ケーキ", category: "objects" },
-  { emoji: "🎁", name: "プレゼント", category: "objects" },
-  { emoji: "💡", name: "電球", category: "objects" }
+  { emoji: "📱", name: "mobile phone", category: "objects" },
+  { emoji: "💻", name: "laptop computer", category: "objects" },
+  { emoji: "⌚", name: "watch", category: "objects" },
+  { emoji: "📚", name: "books", category: "objects" },
+  { emoji: "✏️", name: "pencil", category: "objects" },
+  { emoji: "🎵", name: "musical note", category: "objects" },
+  { emoji: "⚽", name: "soccer ball", category: "objects" },
+  { emoji: "🎂", name: "birthday cake", category: "objects" },
+  { emoji: "🎁", name: "wrapped gift", category: "objects" },
+  { emoji: "💡", name: "light bulb", category: "objects" }
 ];
 
 export const getRandomEmojis = (count = 4) => {
@@ -78,10 +78,32 @@ export const getRandomEmojis = (count = 4) => {
 };
 
 export const getRandomOptions = (correctAnswer, count = 4) => {
-  const incorrect = emojis
-    .filter(emoji => emoji.name !== correctAnswer.name)
-    .sort(() => 0.5 - Math.random())
-    .slice(0, count - 1);
+  // まず同じカテゴリの絵文字を取得
+  const sameCategory = emojis.filter(emoji => 
+    emoji.category === correctAnswer.category && emoji.name !== correctAnswer.name
+  );
+  
+  // 同じカテゴリから不正解の選択肢を選ぶ
+  let incorrect = [];
+  if (sameCategory.length >= count - 1) {
+    // 同じカテゴリに十分な選択肢がある場合
+    incorrect = sameCategory
+      .sort(() => 0.5 - Math.random())
+      .slice(0, count - 1);
+  } else {
+    // 同じカテゴリの絵文字が少ない場合は、全ての同じカテゴリを使い、足りない分は他のカテゴリから補う
+    incorrect = [...sameCategory];
+    const needed = count - 1 - sameCategory.length;
+    if (needed > 0) {
+      const otherEmojis = emojis.filter(emoji => 
+        emoji.category !== correctAnswer.category && emoji.name !== correctAnswer.name
+      );
+      const additionalOptions = otherEmojis
+        .sort(() => 0.5 - Math.random())
+        .slice(0, needed);
+      incorrect = [...incorrect, ...additionalOptions];
+    }
+  }
   
   const options = [correctAnswer, ...incorrect].sort(() => 0.5 - Math.random());
   return options;
