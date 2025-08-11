@@ -97,7 +97,7 @@ const GameScreen = ({ onGameEnd }) => {
       <div className="text-center mb-8">
         {gameMode === 'emojiToName' ? (
           <div>
-            <div className="text-8xl mb-4">{currentEmoji.emoji}</div>
+            <div className="text-9xl mb-4" style={{ fontSize: '8rem' }}>{currentEmoji.emoji}</div>
             <p className="text-xl font-semibold">この絵文字の名前は？</p>
           </div>
         ) : (
@@ -113,18 +113,24 @@ const GameScreen = ({ onGameEnd }) => {
       {/* 選択肢 */}
       <div className="grid grid-cols-1 gap-4 max-w-md mx-auto">
         {options.map((option, index) => {
-          let buttonClass = "w-full p-4 rounded-2xl font-semibold text-lg min-h-[60px] transition-all duration-200 ";
+          const isCorrect = option.name === currentEmoji.name;
+          const isSelected = selectedAnswer && option.name === selectedAnswer.name;
+          
+          let buttonClass = "w-full p-4 rounded-2xl font-semibold text-lg min-h-[60px] ";
           
           if (showResult) {
-            if (option.name === currentEmoji.name) {
+            if (isCorrect) {
+              // 正解は緑色
               buttonClass += "bg-green-500 text-white shadow-lg";
-            } else if (selectedAnswer && option.name === selectedAnswer.name) {
+            } else if (isSelected) {
+              // 選択した不正解は赤色
               buttonClass += "bg-red-500 text-white shadow-lg";
             } else {
+              // その他は半透明
               buttonClass += "bg-white/30 text-white/60";
             }
           } else {
-            buttonClass += "bg-white text-gray-800 hover:shadow-lg hover:scale-105 active:scale-95";
+            buttonClass += "bg-white text-gray-800";
           }
 
           return (
@@ -137,7 +143,7 @@ const GameScreen = ({ onGameEnd }) => {
               {gameMode === 'emojiToName' ? (
                 option.name
               ) : (
-                <span className="text-3xl">{option.emoji}</span>
+                <span className="text-5xl" style={{ fontSize: '3rem' }}>{option.emoji}</span>
               )}
             </button>
           );
