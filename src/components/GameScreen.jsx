@@ -25,10 +25,14 @@ const GameScreen = ({ onGameEnd }) => {
       if (currentQuestion < totalQuestions) {
         setCurrentQuestion(currentQuestion + 1);
       } else {
-        onGameEnd(score);
+        // 修正: 最新のスコアを取得してゲーム終了
+        setScore(currentScore => {
+          onGameEnd(currentScore);
+          return currentScore;
+        });
       }
     }, 1500);
-  }, [currentQuestion, score, onGameEnd]);
+  }, [currentQuestion, onGameEnd]);
 
   useEffect(() => {
     if (timeLeft > 0 && !showResult && !selectedAnswer) {
@@ -37,7 +41,7 @@ const GameScreen = ({ onGameEnd }) => {
     } else if (timeLeft === 0 && !selectedAnswer) {
       handleTimeUp();
     }
-  }, [timeLeft, showResult, selectedAnswer, currentQuestion, score, onGameEnd, handleTimeUp]);
+  }, [timeLeft, showResult, selectedAnswer, handleTimeUp]);
 
   const generateQuestion = () => {
     const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
