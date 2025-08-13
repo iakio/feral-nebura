@@ -1,47 +1,19 @@
 import { useState, useEffect } from 'react';
-import { emojis, getRandomOptions } from '../data/emojis';
+import { generateAllQuestions } from '../data/emojiHelpers';
 
 const GameScreen = ({ onGameEnd }) => {
-  const [currentQuestion, setCurrentQuestion] = useState(1);
+  const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
-  const [gameMode, setGameMode] = useState('emojiToName'); // 'emojiToName' or 'nameToEmoji'
-  const [currentEmoji, setCurrentEmoji] = useState(null);
-  const [options, setOptions] = useState([]);
+  const [questions, setQuestions] = useState([]);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [showResult, setShowResult] = useState(false);
-  const [usedEmojis, setUsedEmojis] = useState([]);
 
   const totalQuestions = 10;
 
   useEffect(() => {
-    generateQuestion();
-  }, [currentQuestion]); // generateQuestionは依存関係に含めない（意図的）
-
-
-  const generateQuestion = () => {
-    // 出題済みでない絵文字を取得
-    const availableEmojis = emojis.filter(emoji => 
-      !usedEmojis.some(used => used.name === emoji.name)
-    );
-    
-    // 利用可能な絵文字がない場合（念のため）
-    if (availableEmojis.length === 0) {
-      console.warn('No more available emojis');
-      return;
-    }
-    
-    const randomEmoji = availableEmojis[Math.floor(Math.random() * availableEmojis.length)];
-    const mode = Math.random() > 0.5 ? 'emojiToName' : 'nameToEmoji';
-    
-    setGameMode(mode);
-    setCurrentEmoji(randomEmoji);
-    setOptions(getRandomOptions(randomEmoji, 4));
-    setSelectedAnswer(null);
-    setShowResult(false);
-    
-    // 使用済みリストに追加
-    setUsedEmojis(prev => [...prev, randomEmoji]);
-  };
+    const generatedQuestions = generateAllQuestions(totalQuestions);
+    setQuestions(generatedQuestions);
+  }, []);
 
   const handleAnswer = (answer) => {
     if (selectedAnswer) return;
@@ -49,20 +21,25 @@ const GameScreen = ({ onGameEnd }) => {
     setSelectedAnswer(answer);
     setShowResult(true);
     
-    if (answer.name === currentEmoji.name) {
+    const currentQuestionData = questions[currentQuestion];
+    if (answer.name === currentQuestionData.emoji.name) {
       setScore(score + 1);
     }
     
     setTimeout(() => {
-      if (currentQuestion < totalQuestions) {
+      if (currentQuestion < totalQuestions - 1) {
         setCurrentQuestion(currentQuestion + 1);
+        setSelectedAnswer(null);
+        setShowResult(false);
       } else {
-        onGameEnd(score + (answer.name === currentEmoji.name ? 1 : 0));
+        onGameEnd(score + (answer.name === currentQuestionData.emoji.name ? 1 : 0));
       }
     }, 1500);
   };
 
-  if (!currentEmoji) return null;
+  if (questions.length === 0) return null;
+
+  const currentQuestionData = questions[currentQuestion];
 
   return (
     <div className="min-h-screen bg-white p-6 text-gray-800">
@@ -70,7 +47,7 @@ const GameScreen = ({ onGameEnd }) => {
       <div className="flex justify-between items-center mb-8">
         <div className="bg-gray-100 rounded-full px-4 py-2">
           <span className="text-sm font-semibold">
-            {currentQuestion} / {totalQuestions}
+            {currentQuestion + 1} / {totalQuestions}
           </span>
         </div>
         <div className="bg-gray-100 rounded-full px-4 py-2">
@@ -81,15 +58,15 @@ const GameScreen = ({ onGameEnd }) => {
 
       {/* 問題 */}
       <div className="text-center mb-8">
-        {gameMode === 'emojiToName' ? (
+        {currentQuestionData.mode === 'emojiToName' ? (
           <div>
-            <div className="text-9xl mb-4" style={{ fontSize: '8rem' }}>{currentEmoji.emoji}</div>
+            <div className="text-9xl mb-4" style={{ fontSize: '8rem' }}>{currentQuestionData.emoji.emoji}</div>
             <p className="text-xl font-semibold">この絵文字の名前は？</p>
           </div>
         ) : (
           <div>
             <div className="bg-gray-100 rounded-2xl p-6 mb-4">
-              <p className="text-2xl font-bold">{currentEmoji.name}</p>
+              <p className="text-2xl font-bold">{currentQuestionData.emoji.name}</p>
             </div>
             <p className="text-xl font-semibold">この名前の絵文字は？</p>
           </div>
@@ -98,8 +75,8 @@ const GameScreen = ({ onGameEnd }) => {
 
       {/* 選択肢 */}
       <div className="grid grid-cols-1 gap-4 max-w-md mx-auto">
-        {options.map((option, index) => {
-          const isCorrect = option.name === currentEmoji.name;
+        {currentQuestionData.options.map((option, index) => {
+          const isCorrect = option.name === currentQuestionData.emoji.name;
           const isSelected = selectedAnswer && option.name === selectedAnswer.name;
           
           let buttonClass = "w-full p-4 rounded-2xl font-semibold text-lg min-h-[60px] ";
@@ -126,7 +103,7 @@ const GameScreen = ({ onGameEnd }) => {
               className={buttonClass}
               disabled={showResult || selectedAnswer}
             >
-              {gameMode === 'emojiToName' ? (
+              {currentQuestionData.mode === 'emojiToName' ? (
                 option.name
               ) : (
                 <span className="text-5xl" style={{ fontSize: '3rem' }}>{option.emoji}</span>
@@ -139,7 +116,7 @@ const GameScreen = ({ onGameEnd }) => {
       {/* 結果表示 */}
       {showResult && (
         <div className="text-center mt-6">
-          {selectedAnswer && selectedAnswer.name === currentEmoji.name ? (
+          {selectedAnswer && selectedAnswer.name === currentQuestionData.emoji.name ? (
             <div className="text-2xl">🎉 正解！</div>
           ) : (
             <div className="text-2xl">❌ 不正解</div>

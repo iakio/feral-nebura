@@ -41,7 +41,7 @@ function generateEmojiData() {
   const selectedEmojis = [];
   const maxPerCategory = 20;
   
-  Object.entries(categorized).forEach(([category, emojis]) => {
+  Object.entries(categorized).forEach(([, emojis]) => {
     const selected = emojis
       .sort(() => 0.5 - Math.random()) // ランダムに並び替え
       .slice(0, maxPerCategory);
@@ -58,41 +58,8 @@ const fileContent = `export const emojis = [
 ${emojiData.map(emoji => {
   return `  { emoji: "${emoji.emoji}", name: "${emoji.name}", category: "${emoji.category}" }`;
 }).join(',\n')}
-];
+];`;
 
-export const getRandomOptions = (correctAnswer, count = 4) => {
-  // まず同じカテゴリの絵文字を取得
-  const sameCategory = emojis.filter(emoji => 
-    emoji.category === correctAnswer.category && emoji.name !== correctAnswer.name
-  );
-  
-  // 同じカテゴリから不正解の選択肢を選ぶ
-  let incorrect = [];
-  if (sameCategory.length >= count - 1) {
-    // 同じカテゴリに十分な選択肢がある場合
-    incorrect = sameCategory
-      .sort(() => 0.5 - Math.random())
-      .slice(0, count - 1);
-  } else {
-    // 同じカテゴリの絵文字が少ない場合は、全ての同じカテゴリを使い、足りない分は他のカテゴリから補う
-    incorrect = [...sameCategory];
-    const needed = count - 1 - sameCategory.length;
-    if (needed > 0) {
-      const otherEmojis = emojis.filter(emoji => 
-        emoji.category !== correctAnswer.category && emoji.name !== correctAnswer.name
-      );
-      const additionalOptions = otherEmojis
-        .sort(() => 0.5 - Math.random())
-        .slice(0, needed);
-      incorrect = [...incorrect, ...additionalOptions];
-    }
-  }
-  
-  const options = [correctAnswer, ...incorrect].sort(() => 0.5 - Math.random());
-  return options;
-};
-`;
-
-fs.writeFileSync('./src/data/emojis.js', fileContent);
+fs.writeFileSync('./src/data/emojiData.js', fileContent);
 console.log(`Generated ${emojiData.length} emojis across ${new Set(emojiData.map(e => e.category)).size} categories`);
 console.log('Categories:', [...new Set(emojiData.map(e => e.category))].sort());
