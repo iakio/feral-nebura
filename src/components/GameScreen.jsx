@@ -3,8 +3,8 @@ import { generateAllQuestions } from '../data/emojiHelpers';
 
 const GameScreen = ({ onGameEnd }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [score, setScore] = useState(0);
   const [questions, setQuestions] = useState([]);
+  const [questionResults, setQuestionResults] = useState([]);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [showResult, setShowResult] = useState(false);
 
@@ -22,9 +22,17 @@ const GameScreen = ({ onGameEnd }) => {
     setShowResult(true);
     
     const currentQuestionData = questions[currentQuestion];
-    if (answer.name === currentQuestionData.emoji.name) {
-      setScore(score + 1);
-    }
+    const isCorrect = answer.name === currentQuestionData.emoji.name;
+    
+    // 結果を記録
+    const result = {
+      question: currentQuestionData,
+      userAnswer: answer,
+      isCorrect: isCorrect
+    };
+    
+    const newResults = [...questionResults, result];
+    setQuestionResults(newResults);
     
     setTimeout(() => {
       if (currentQuestion < totalQuestions - 1) {
@@ -32,7 +40,7 @@ const GameScreen = ({ onGameEnd }) => {
         setSelectedAnswer(null);
         setShowResult(false);
       } else {
-        onGameEnd(score + (answer.name === currentQuestionData.emoji.name ? 1 : 0));
+        onGameEnd(newResults);
       }
     }, 1500);
   };
@@ -51,7 +59,7 @@ const GameScreen = ({ onGameEnd }) => {
           </span>
         </div>
         <div className="bg-gray-100 rounded-full px-4 py-2">
-          <span className="text-sm font-semibold">スコア: {score}</span>
+          <span className="text-sm font-semibold">スコア: {questionResults.filter(r => r.isCorrect).length}</span>
         </div>
       </div>
 

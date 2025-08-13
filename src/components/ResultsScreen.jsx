@@ -1,5 +1,6 @@
-const ResultsScreen = ({ score, onRestart, onBackToTitle }) => {
-  const totalQuestions = 10;
+const ResultsScreen = ({ results = [], onRestart, onBackToTitle }) => {
+  const totalQuestions = results.length;
+  const score = results.filter(r => r.isCorrect).length;
   const percentage = Math.round((score / totalQuestions) * 100);
   
   const getScoreMessage = () => {
@@ -21,36 +22,33 @@ const ResultsScreen = ({ score, onRestart, onBackToTitle }) => {
       </div>
       
       {/* スコア表示 */}
-      <div className="bg-gray-100 rounded-3xl p-8 mb-8 text-center max-w-sm w-full">
-        <div className="mb-6">
-          <div className="text-6xl font-bold mb-2">{score}</div>
-          <div className="text-xl opacity-90">/ {totalQuestions} 問</div>
-        </div>
-        
-        <div className="mb-4">
-          <div className="bg-gray-300 rounded-full h-4 overflow-hidden">
-            <div 
-              className="bg-blue-500 h-full rounded-full transition-all duration-1000 ease-out"
-              style={{ width: `${percentage}%` }}
-            />
-          </div>
-          <div className="text-2xl font-bold mt-2">{percentage}%</div>
-        </div>
-        
-        {/* 詳細スコア */}
-        <div className="grid grid-cols-2 gap-4 text-sm">
-          <div className="bg-green-500/30 rounded-xl p-3">
-            <div className="text-2xl mb-1">✅</div>
-            <div className="font-semibold">正解</div>
-            <div className="text-lg font-bold">{score}</div>
-          </div>
-          <div className="bg-red-500/30 rounded-xl p-3">
-            <div className="text-2xl mb-1">❌</div>
-            <div className="font-semibold">不正解</div>
-            <div className="text-lg font-bold">{totalQuestions - score}</div>
-          </div>
-        </div>
+      <div className="bg-gray-100 rounded-3xl p-6 mb-8 text-center max-w-sm w-full">
+        <div className="text-5xl font-bold mb-2">{score}</div>
+        <div className="text-lg opacity-90">/ {totalQuestions} 問正解</div>
       </div>
+      
+      {/* 問題別結果一覧 */}
+      {results.length > 0 && (
+        <div className="w-full max-w-md mb-8">
+          <h2 className="text-xl font-bold text-center mb-4">問題別結果</h2>
+          <div className="bg-gray-50 rounded-2xl p-4 max-h-64 overflow-y-auto">
+            {results.map((result, index) => (
+              <div key={index} className="flex items-center gap-3 p-3 border-b border-gray-200 last:border-b-0">
+                <div className="text-2xl">{result.question.emoji.emoji}</div>
+                <div className="flex-1 min-w-0">
+                  <div className="font-semibold text-sm truncate">{result.question.emoji.name}</div>
+                  <div className="text-xs text-gray-600">
+                    {result.question.mode === 'emojiToName' ? '絵文字→名前' : '名前→絵文字'}
+                  </div>
+                </div>
+                <div className="text-xl">
+                  {result.isCorrect ? '✅' : '❌'}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
       
       {/* ボタン */}
       <div className="space-y-4 w-full max-w-sm">

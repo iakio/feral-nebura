@@ -5,14 +5,14 @@ import ResultsScreen from './components/ResultsScreen'
 
 function App() {
   const [gameState, setGameState] = useState('title') // 'title', 'playing', 'results'
-  const [finalScore, setFinalScore] = useState(0)
+  const [gameResults, setGameResults] = useState([])
 
   const handleStartGame = () => {
     setGameState('playing')
   }
 
-  const handleGameEnd = (score) => {
-    setFinalScore(score)
+  const handleGameEnd = (results) => {
+    setGameResults(results)
     setGameState('results')
   }
 
@@ -22,7 +22,7 @@ function App() {
 
   const handleBackToTitle = () => {
     setGameState('title')
-    setFinalScore(0)
+    setGameResults([])
   }
 
   return (
@@ -37,7 +37,7 @@ function App() {
       
       {gameState === 'results' && (
         <ResultsScreen 
-          score={finalScore}
+          results={gameResults}
           onRestart={handleRestart}
           onBackToTitle={handleBackToTitle}
         />
