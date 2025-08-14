@@ -9,6 +9,23 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `npm run lint` - Run ESLint to check code quality
 - `npm run preview` - Preview production build locally
 
+## Deployment
+
+This project is configured for Firebase Hosting with automatic deployment:
+
+- **Hosting Platform**: Firebase Hosting
+- **Project ID**: `feral-nebura`
+- **Auto-deploy**: GitHub Actions workflow deploys on push to main branch
+- **Build Output**: `dist/` directory (Vite build output)
+- **Configuration**: `firebase.json` and `.firebaserc`
+
+### Manual Deployment
+
+```bash
+npm run build
+firebase deploy
+```
+
 ## Project Architecture
 
 This is an Emoji Quiz Game built with React + Vite:
@@ -27,7 +44,8 @@ The game consists of three main screens optimized for mobile/smartphone display:
 2. **Game Screen** - Main quiz gameplay with two modes:
    - Emoji → Name: Show emoji, choose correct name
    - Name → Emoji: Show name, choose correct emoji
-3. **Results Screen** - Final score and replay option
+   - Generates 10 questions at game start for consistent gameplay
+3. **Results Screen** - Final score with detailed question-by-question breakdown
 
 ### UI/UX Guidelines
 
@@ -43,11 +61,16 @@ The game consists of three main screens optimized for mobile/smartphone display:
 - `src/main.jsx` - Application entry point, renders App in StrictMode
 - `src/App.jsx` - Main application component with game state management
 - `src/components/TitleScreen.jsx` - Welcome screen component
-- `src/components/GameScreen.jsx` - Quiz gameplay component
-- `src/components/ResultsScreen.jsx` - Score display component
-- `src/data/emojis.js` - Emoji data with names and categories
+- `src/components/GameScreen.jsx` - Quiz gameplay component with question generation
+- `src/components/ResultsScreen.jsx` - Score display with detailed results breakdown
+- `src/data/emojiData.js` - Emoji dataset with names and categories
+- `src/data/emojiHelpers.js` - Utility functions for question generation and options
+- `generate-emojis.js` - Script to generate emoji data from unicode-emoji package
 - `vite.config.js` - Vite configuration with React plugin
 - `eslint.config.js` - ESLint configuration using flat config format
+- `firebase.json` - Firebase Hosting configuration
+- `.firebaserc` - Firebase project configuration
+- `.github/workflows/` - GitHub Actions for automatic deployment
 
 ### ESLint Configuration
 
@@ -57,9 +80,19 @@ The project uses the new ESLint flat config format with:
 - React Refresh for Vite
 - Custom rule: unused variables starting with uppercase are ignored
 
+### Data Architecture
+
+- **Emoji Data**: Split into separate files for better maintainability
+  - `emojiData.js`: Pure data array with emoji objects
+  - `emojiHelpers.js`: Helper functions for game logic
+- **Game Logic**: Question generation happens at game start (10 questions)
+- **State Management**: Single source of truth using results array
+- **Score Calculation**: Derived from question results, not stored separately
+
 ### File Conventions
 
 - Use `.jsx` extension for React components
 - ES6+ syntax with modules
 - React functional components with hooks
 - CSS modules available via import
+- Separate data and logic into focused files
