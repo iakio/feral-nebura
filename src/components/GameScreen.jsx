@@ -42,7 +42,7 @@ const GameScreen = ({ onGameEnd }) => {
       } else {
         onGameEnd(newResults);
       }
-    }, 1500);
+    }, 1000);
   };
 
   if (questions.length === 0) return null;
@@ -92,13 +92,13 @@ const GameScreen = ({ onGameEnd }) => {
           if (showResult) {
             if (isCorrect) {
               // 正解は緑色
-              buttonClass += "bg-green-500 text-white shadow-lg";
+              buttonClass += "bg-green-500 text-white shadow-lg border border-green-600";
             } else if (isSelected) {
               // 選択した不正解は赤色
-              buttonClass += "bg-red-500 text-white shadow-lg";
+              buttonClass += "bg-red-500 text-white shadow-lg border border-red-600";
             } else {
               // その他は薄いグレー
-              buttonClass += "bg-gray-200 text-gray-500";
+              buttonClass += "bg-gray-200 text-gray-500 border border-gray-300";
             }
           } else {
             buttonClass += "bg-gray-100 border border-gray-300 text-gray-800 hover:bg-gray-200";
